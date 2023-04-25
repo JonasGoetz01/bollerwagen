@@ -1,0 +1,10 @@
+#include <Wire.h>
+#include "pitches.h"
+#include "variables.h"
+#include "buzzer.h"
+#include "display.cpp"
+#include "tempSensor.cpp"
+#include "currentSensor.cpp"
+#include "rotary.cpp"
+#include "EEPROM.cpp"
+#include "switch.cpp"
