@@ -1,6 +1,9 @@
 #import <Arduino.h>
 #import "variables.h"
 #import "motor.h"
+#import "currentSensor.h"
+
+CurrentSensor currentSensor;
 
 void Motor::initialize(){
   //Motor
@@ -24,15 +27,17 @@ void Motor::disable(){
 void Motor::accelerate() {
   //Motor beschleunigen und abbremsen
   for (int i = 30; i < 255; i++){
-    analogWrite(RPWM, i);
-    delay(25);
+    analogWrite(LPWM, i);
+    currentSensor.initialize();
+    delay(50);
   }
 }
 
 void Motor::slowDown() {
   for (int i = 255; i > 30; i--){
-    analogWrite(RPWM, i);
-    delay(25);
+    analogWrite(LPWM, i);
+    currentSensor.initialize();
+    delay(50);
   }
   analogWrite(RPWM, 0);
 }

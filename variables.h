@@ -15,3 +15,10 @@
 
 // Temp sensor
 #define TEMP 34
+
+// Current Sensor
+#define CURRENTSENSOR_PIN 32 
+#define CURRENTSENSOR_PIN2 35
+#define CURRENTSENSOR_VCC 3.3
+#define CURRENTSENSOR_MODEL 0 //ACS758LCB-050B
+#define CURRENTSENSOR_CUTOFFLIMIT 1.00 // 1A = 1%

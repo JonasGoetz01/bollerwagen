@@ -32,10 +32,10 @@ void setup() {
   motor.accelerate();
   motor.slowDown();
   motor.disable();
-  motor.accelerate();
-  motor.slowDown();
 
   tempSensor.initialize();
+
+  
 }
 
 void loop() {
