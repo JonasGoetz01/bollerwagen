@@ -1,7 +1,7 @@
-#import <Arduino.h>
-#import "variables.h"
-#import "motor.h"
-#import "currentSensor.h"
+#include <Arduino.h>
+#include "../variables.h"
+#include "motor.h"
+#include "../currentSensor/currentSensor.h"
 
 CurrentSensor currentSensor;
 

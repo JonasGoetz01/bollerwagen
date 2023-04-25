@@ -1,7 +1,7 @@
-#import <Arduino.h>
-#import "variables.h"
-#import "pitches.h"
-#import "buzzer.h"
+#include <Arduino.h>
+#include "../variables.h"
+#include "pitches.h"
+#include "buzzer.h"
 
 void Buzzer::initialize() {
   ledcSetup(0, 1000, 1);

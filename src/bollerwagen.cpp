@@ -1,15 +1,14 @@
 #include <Arduino.h>
 #include <Wire.h>
-#include "pitches.h"
 #include "variables.h"
-#include "buzzer.h"
-#include "motor.h"
-#include "display.h"
-#include "currentSensor.h"
-#include "rotary.h"
-#include "EEPROM.h"
-#include "switch.h"
-#include "tempSensor.h"
+#include "./buzzer/buzzer.h"
+#include "./motor/motor.h"
+#include "./display/display.h"
+#include "./currentSensor/currentSensor.h"
+#include "./rotary/rotary.h"
+#include "./EEPROM/EEPROM.h"
+#include "./switch/switch.h"
+#include "./tempSensor/tempSensor.h"
 
 
 Buzzer buzzer;
