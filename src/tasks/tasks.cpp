@@ -11,7 +11,9 @@ void sensorTask(void *parameter) {
   {
     //@TODO
     //Sensoren checken
-    Serial.println("Check sensors");
+    if(vars->debug){
+        Serial.println("Check sensors");
+    }
     vTaskDelay(SENSORCHECKINTERVAL / portTICK_PERIOD_MS);
   }
 }
@@ -23,14 +25,18 @@ void triggerChange(void *parameter) {
     if(!vars->trigger) {
         if(digitalRead(TRIGGERPIN) == HIGH){
             vars->trigger = true;
-            Serial.println("TRIGGER DOWN");
+            if(vars->debug){
+                Serial.println("TRIGGER DOWN");
+            }
         }
     }
 
     if(vars->trigger) {
         if(digitalRead(TRIGGERPIN) == LOW){
             vars->trigger = false;
-            Serial.println("TRIGGER UP");
+            if(vars->debug){
+                Serial.println("TRIGGER UP");
+            }
         }
     }
     vTaskDelay(1000 / portTICK_PERIOD_MS);
@@ -64,20 +70,22 @@ void motorSpeed(void *parameter) {
 
     taskMotor.run(vars->motorDir, vars->currentMotorSpeed);
 
-    Serial.print("Enabled:");
-    Serial.print(vars->motorEnabled);
-    Serial.print(", ");
-    Serial.print("DesiredSpeed:");
-    Serial.print(vars->desiredMotorSpeed);
-    Serial.print(", ");
-    Serial.print("CurrentSpeed:");
-    Serial.print(vars->currentMotorSpeed);
-    Serial.print(", ");
-    Serial.print("ENR:");
-    Serial.print(digitalRead(REN));
-    Serial.print(", ");
-    Serial.print("ENL:");
-    Serial.println(digitalRead(LEN));
+    if(vars->debug){
+        Serial.print("Enabled:");
+        Serial.print(vars->motorEnabled);
+        Serial.print(", ");
+        Serial.print("DesiredSpeed:");
+        Serial.print(vars->desiredMotorSpeed);
+        Serial.print(", ");
+        Serial.print("CurrentSpeed:");
+        Serial.print(vars->currentMotorSpeed);
+        Serial.print(", ");
+        Serial.print("ENR:");
+        Serial.print(digitalRead(REN));
+        Serial.print(", ");
+        Serial.print("ENL:");
+        Serial.println(digitalRead(LEN));
+    }
 
     vTaskDelay(100 / portTICK_PERIOD_MS);
   }

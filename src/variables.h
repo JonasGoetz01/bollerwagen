@@ -50,4 +50,6 @@ struct Variables
   uint8_t batteryPercentage = 100;
 
   bool trigger = false;
+
+  bool debug = false;
 };
