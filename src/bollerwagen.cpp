@@ -9,12 +9,16 @@
 #include "./EEPROM/EEPROM.h"
 #include "./switch/switch.h"
 #include "./tempSensor/tempSensor.h"
+#include "./tasks/tasks.h"
 
 
 Buzzer buzzer;
 Motor motor;
 Display oled;
 TempSensor tempSensor;
+
+Variables variables;
+
 
 void setup() {
   Serial.begin(9600);
@@ -29,17 +33,19 @@ void setup() {
 
   motor.initialize();
   motor.enable();
-  motor.accelerate();
-  motor.slowDown();
+  //motor.accelerate();
+  //motor.slowDown();
   motor.disable();
 
   tempSensor.initialize();
 
-  
+  //Tasks definieren
+  //                      function     description    ram   parameters         prio exception core
+  xTaskCreatePinnedToCore(&sensorTask, "SENSOR_TASK", 2048, (void*)&variables, 1,   NULL,     0);
 }
 
 void loop() {
   Serial.print(tempSensor.getTemperature());
   Serial.println(" C");
-  delay(2000);
+  vTaskDelay(SENSORCHECKINTERVAL / 2 / portTICK_PERIOD_MS);
 }

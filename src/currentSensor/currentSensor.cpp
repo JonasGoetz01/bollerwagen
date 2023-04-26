@@ -31,16 +31,16 @@ void CurrentSensor::initialize() {
   float voltage;
   float cutOff = FACTOR / CURRENTSENSOR_CUTOFFLIMIT;
 
-  float voltage_raw = (CURRENTSENSOR_VCC / 1023.0) * analogRead(CURRENTSENSOR_PIN2);
+  float voltage_raw = (CURRENTSENSOR_VCC / 1023.0) * analogRead(CURRENTSENSOR_PIN);
   voltage = voltage_raw - QOV + 0.007;
   float current = voltage / FACTOR;
 
   if(abs(voltage) > cutOff) {
     Serial.print("Voltage:");
-    Serial.print(analogRead(CURRENTSENSOR_PIN));
+    Serial.print(voltage, 3);
     Serial.print(", ");
     Serial.print("Current:");
-    Serial.println(analogRead(CURRENTSENSOR_PIN2));
+    Serial.println(current, 2);
   } else {
     Serial.println("No Current");
   }
