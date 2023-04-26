@@ -8,6 +8,7 @@ public:
   void slowDown();
   void disable();
   void enable();
+  void run(bool, u_int8_t);
 };
 
 #endif
