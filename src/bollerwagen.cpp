@@ -1,5 +1,12 @@
 #include <Arduino.h>
 #include <Wire.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "driver/adc.h"
+#include "driver/ledc.h"
+
 #include "variables.h"
 #include "./buzzer/buzzer.h"
 #include "./motor/motor.h"
@@ -11,12 +18,6 @@
 #include "./tempSensor/tempSensor.h"
 #include "./tasks/tasks.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "driver/adc.h"
-#include "driver/ledc.h"
 
 
 Buzzer buzzer;
@@ -33,20 +34,18 @@ Variables variables;
 
 void setup() {
   Serial.begin(9600);
+  Serial2.begin(9600);
 
   Serial.println("Welcome to Bollerwagen!");
 
-  //buzzer.initialize();
+  buzzer.initialize();
   //buzzer.startSound();
 
-  //oled.initialize();
+  oled.initialize();
   //oled.testText();
-  // configure LED PWM functionalitites
-  ledcSetup(ledChannel, freq, resolution);
   
-  // attach the channel to the GPIO to be controlled
+  ledcSetup(ledChannel, freq, resolution);
   ledcAttachPin(RPWM, ledChannel);
-  //delay(10000);
 
   motor.initialize();
   motor.enable();
@@ -57,20 +56,12 @@ void setup() {
   //                      function     description    ram   parameters         prio exception core
   xTaskCreatePinnedToCore(&sensorTask, "SENSOR_TASK", 2048, (void*)&variables, 1,   NULL,     1);
   xTaskCreatePinnedToCore(&triggerChange, "TRIGGER_CHANGE", 2048, (void*)&variables, 1,   NULL,     1);
-  xTaskCreatePinnedToCore(&motorSpeed, "MOTOR_SPEED", 2048, (void*)&variables, 1,   NULL,     1);
+  //xTaskCreatePinnedToCore(&serialTask, "SERIAL_TASK", 2048, (void*)&variables, 1,   NULL,     1);
+  xTaskCreatePinnedToCore(&motorSpeed, "MOTOR_SPEED", 2048, (void*)&variables, 1,   NULL,     0);
 
   pinMode(TRIGGERPIN, INPUT_PULLUP);
 }
 
 void loop() {
-  // if(1) {
-  //   ledcWrite(0, 255);
-  //   //dacWrite(LPWM, vars->currentMotorSpeed);
-  //   //analogWrite(RPWM, 0);
-  // } else {
-  //   //analogWrite(LPWM, 0);
-  //   ledcWrite(0, 0);
-  //   //dacWrite(RPWM, vars->currentMotorSpeed);
-  // }
   delay(100 / portTICK_PERIOD_MS);
 }
