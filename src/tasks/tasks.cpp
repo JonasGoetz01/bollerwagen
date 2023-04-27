@@ -18,6 +18,24 @@ void sensorTask(void *parameter) {
   }
 }
 
+void serialTask(void *parameter) {
+  Variables *vars = (Variables*)parameter;
+  String data = "";
+  while (1)
+  {
+    if(Serial2.available()){
+        data = Serial2.readStringUntil('\n');
+    }
+    //@TODO
+    //Sensoren checken
+    if(vars->debug){
+        Serial.println("Check serial");
+        Serial.println(data);
+    }
+  }
+  vTaskDelay(1 / portTICK_PERIOD_MS);
+}
+
 void triggerChange(void *parameter) {
   Variables *vars = (Variables*)parameter;
   while (1)
@@ -39,7 +57,7 @@ void triggerChange(void *parameter) {
             }
         }
     }
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
+    vTaskDelay(TRIGGERCHANGEINTERVAL / portTICK_PERIOD_MS);
   }
 }
 
@@ -87,6 +105,6 @@ void motorSpeed(void *parameter) {
         Serial.println(digitalRead(LEN));
     }
 
-    vTaskDelay(100 / portTICK_PERIOD_MS);
+    vTaskDelay(MOTORSPEEDINTERVAL / portTICK_PERIOD_MS);
   }
 }
