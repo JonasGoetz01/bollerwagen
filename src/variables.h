@@ -30,9 +30,13 @@
 
 //Timers
 #define SENSORCHECKINTERVAL 4000
+#define TRIGGERCHANGEINTERVAL 100
+#define MOTORSPEEDINTERVAL 100
 
 //Trigger
 #define TRIGGERPIN 33
+
+#define DEBUG false
 
 struct Variables
 {
@@ -51,5 +55,5 @@ struct Variables
 
   bool trigger = false;
 
-  bool debug = false;
+  bool debug = DEBUG;
 };
